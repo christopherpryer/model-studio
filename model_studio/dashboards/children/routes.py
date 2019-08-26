@@ -17,7 +17,7 @@ def get_basic_table(df):
         sorting=True,
     )
 
-def Get_Chart_Children():
+def Get_Routes_Children():
     df = get_data()
     children = []
     children += [get_basic_table(df)]

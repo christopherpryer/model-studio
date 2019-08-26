@@ -3,7 +3,7 @@ from pathlib import Path
 from dash import Dash, callback_context
 import dash_html_components as html
 from .layout import html_layout
-from .children import chart
+from .children import routes
 
 EXTERNAL_STYLESHEETS = ['/static/dist/css/load.css',
                         '/static/dist/css/styles.css',
@@ -20,7 +20,7 @@ def Add_Routes_App(server):
     dash_app = Dash(server=server,
                     external_stylesheets=EXTERNAL_STYLESHEETS,
                     external_scripts=EXTERNAL_SCRIPTS,
-                    routes_pathname_prefix='/chart/')
+                    routes_pathname_prefix='/routes/')
 
     # Override the underlying HTML template
     dash_app.index_string = html_layout
@@ -30,7 +30,7 @@ def Add_Routes_App(server):
     dash_app.layout = html.Div(
         children=html.Div(
             html.Div(
-                chart.Get_Chart_Children(), className='container-fluid',
+                routes.Get_Routes_Children(), className='container-fluid',
                 style={'width': '100%'}
             ),
             className='content-wrapper'),

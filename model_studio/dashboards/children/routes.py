@@ -4,7 +4,8 @@ import plotly.graph_objects as go
 import dash_table
 import pandas as pd
 import numpy as np
-from ..utils import *
+from ...utils import APP_STATIC
+import os
 
 def get_data():
     filepath = os.path.join(APP_STATIC, 'data.csv')

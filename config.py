@@ -1,6 +1,16 @@
 """App config."""
 import os
+import urllib
 
+# database
+driver = '{SQL Server}'
+server = '{%s}' % os.environ.get('SQL_SERVER')
+database = '{%s}' % 'dev_testing'
+_str = urllib.parse.quote_plus(('DRIVER={};SERVER={};DATABASE={}'
+            ';Trusted_Connection=yes').format(
+                driver,
+                server,
+                database))
 
 class Config:
     """Global configuration variables."""
@@ -19,3 +29,6 @@ class Config:
     STATIC_FOLDER = os.environ.get('STATIC_FOLDER')
     TEMPLATES_FOLDER = os.environ.get('TEMPLATES_FOLDER')
     COMPRESSOR_DEBUG = os.environ.get('COMPRESSOR_DEBUG')
+
+    # Database
+    SQLALCHEMY_DATABASE_URI = 'mssql+pyodbc:///?odbc_connect=%s' % _str

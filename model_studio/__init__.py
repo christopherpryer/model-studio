@@ -4,7 +4,12 @@ from flask_assets import Environment, Bundle
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object('config.Config')
+
+    if test_config is None:
+        # load instance config if it exists when not testing
+        app.config.from_object('config.Config')
+    else:
+        app.config.from_mapping(test_config)
 
     try:
         os.makedirs(app.instance_path)
@@ -25,6 +30,6 @@ def create_app(test_config=None):
     assets.register('js_all', js_bundle)
 
     from .dashboards import main
-    app = main.Add_Cartesian_Chart(app)
+    app = main.Add_Routes_App(app)
 
     return app

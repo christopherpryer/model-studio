@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from flask.cli import with_appcontext
 import click
 import os
+from .utils import url_for
 
 db = SQLAlchemy()
 from . import models
@@ -47,6 +48,9 @@ def create_app(test_config=None):
         click.echo('Initialized the database.')
 
     app.cli.add_command(init_db_command)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     from .dashboards import main
     app = main.Add_Routes_App(app)

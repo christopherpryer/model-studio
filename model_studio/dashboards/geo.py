@@ -2,8 +2,13 @@
 from pathlib import Path
 from dash import Dash, callback_context
 import dash_html_components as html
+
 from .layout import html_layout
-from .children import routes
+from .callbacks import geo as callbacks
+
+from ..auth import login_required
+from ..utils import url_for
+
 
 EXTERNAL_STYLESHEETS = ['/static/dist/css/load.css',
                         '/static/dist/css/styles.css',
@@ -15,26 +20,27 @@ EXTERNAL_STYLESHEETS = ['/static/dist/css/load.css',
 EXTERNAL_SCRIPTS = ['/static/dist/js/includes/jquery.min.js',
                         '/static/dist/js/main.js']
 
-def Add_Routes_App(server):
+
+def init_app(server):
     """Create a Dash app."""
     dash_app = Dash(server=server,
                     external_stylesheets=EXTERNAL_STYLESHEETS,
                     external_scripts=EXTERNAL_SCRIPTS,
-                    routes_pathname_prefix='/routes/')
+                    routes_pathname_prefix='/geo/')
 
-    # Override the underlying HTML template
     dash_app.index_string = html_layout
     dash_app.config['suppress_callback_exceptions'] = True
 
-    # Create Dash Layout comprised of Data Tables
     dash_app.layout = html.Div(
-        children=html.Div(
+        children=[html.P('Test', hidden=True, id='test'), html.Div(
             html.Div(
-                routes.Get_Routes_Children(), className='container-fluid',
+                [], className='container-fluid', id='geo-parent',
                 style={'width': '100%'}
             ),
-            className='content-wrapper'),
+            className='content-wrapper')],
         id='dash-container'
     )
+
+    callbacks.init_callbacks(dash_app)
 
     return dash_app.server

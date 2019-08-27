@@ -1,11 +1,9 @@
+# TODO: abstract & create API utilization
 import functools
-from flask import (
-    Blueprint, flash, g, redirect, render_template,
-    request, session, url_for
-)
-from werkzeug.security import (
-    check_password_hash, generate_password_hash
-)
+from flask import (Blueprint, flash, g, redirect, render_template,
+request, session, url_for)
+from werkzeug.security import check_password_hash, generate_password_hash
+
 from . import db
 from .models import User
 
@@ -22,11 +20,13 @@ def register():
             error = 'Username is required.'
         elif not password:
             error = 'Password is required.'
-
-        # if username exist, warn
+        elif User.query.filter_by(username=username).first():
+            error = 'Username already exists.'
 
         if error is None:
-            db.session.add(User(username=username, password=password))
+            # TODO: user autoincrement may not be working in mssql
+            user = User(username=username, password=password)
+            db.session.add(user)
             db.session.commit()
             return redirect(url_for('auth.login'))
 
@@ -50,7 +50,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user.id
-            return redirect('/routes')
+            return redirect(url_for('main.home'))
 
         flash(error)
 
@@ -68,7 +68,7 @@ def load_logged_in_user():
 @bp.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for('auth.login'))
 
 def login_required(view):
     @functools.wraps(view)

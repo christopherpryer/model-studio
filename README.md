@@ -13,3 +13,6 @@ Flask web app with user authentication and database connection for Plotly dash a
   - ```export SQL_SERVER=server-name-here```
 - ```python -m flask run```
 - [click here](http://127.0.0.1:5000/routes/)
+
+#### Other
+- ```python -m flask init-db``` to initialize the database using models.py

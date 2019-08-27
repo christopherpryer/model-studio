@@ -1,11 +1,12 @@
-import binascii
-import os
+# TODO: token authentication & session management
 from flask import abort, g
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
+import binascii
+import os
+
 from . import db
 from .utils import timestamp, url_for
-
 
 class User(db.Model):
     """The User model."""
@@ -15,7 +16,7 @@ class User(db.Model):
     updated_at = db.Column(db.Integer, default=timestamp, onupdate=timestamp)
     username = db.Column(db.String(32), nullable=False, unique=True)
     password_hash = db.Column(db.String(256), nullable=False)
-    token = db.Column(db.String(64), nullable=True, unique=True)
+    #token = db.Column(db.String(64), nullable=True, unique=True)
 
     @property
     def password(self):
@@ -58,7 +59,7 @@ class User(db.Model):
             'updated_at': self.updated_at,
             'username': self.username,
             '_links': {
-                'self': url_for('api.get_user', id=self.id),
-                'tokens': url_for('api.new_token')
+                #'self': url_for('api.get_user', id=self.id),
+                #'tokens': url_for('api.new_token')
             }
         }

@@ -7,16 +7,15 @@ html_layout = '''<!DOCTYPE html>
                             {%css%}
                         </head>
                         <body>
-                            <section>
-                                <nav>
-                                    <h2>Model Studio</h2>
-                                </nav>
-                            </section>
+                            <nav>
+                                <h2>Model Studio</h2>
+                            </nav>
                             <br>
 
                             <section>
                                 {%app_entry%}
                             </section>
+
                             <footer>
                                 {%config%}
                                 {%scripts%}

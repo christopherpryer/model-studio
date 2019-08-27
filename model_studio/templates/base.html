@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>{% block title %}{% endblock %} - CR </title>
+    <title>{% block title %}{% endblock %} - MS</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -11,13 +11,15 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
-
 <body>
-    <section>
+
+    <div class="container">
         <nav>
             <h2>Model Studio</h2>
         </nav>
-    </section>
+    </div>
+
+
     <ul>
         {% if g.user %}
             <li><span>{{g.user['username']}}</span></li>
@@ -28,14 +30,13 @@
         {% endif %}
     </ul>
 
-    <section>
-        <div class="container" align="center">
-            {% for message in get_flashed_messages() %}
-                <div class="flash">{{message}}</div>
-            {% endfor %}
-            {% block content %}{% endblock %}
-        </div>
-    </section>
+
+    <div class="container" align="center">
+        {% for message in get_flashed_messages() %}
+            <div class="flash">{{message}}</div>
+        {% endfor %}
+        {% block content %}{% endblock %}
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

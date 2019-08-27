@@ -53,7 +53,7 @@ def get_basic_chart(df):
     return dcc.Graph(figure=fig, id='map')
 
 
-def Get_Routes_Children():
+def get_children():
     df = get_data()
     children = []
     children += [get_basic_chart(df), get_basic_table(df)]

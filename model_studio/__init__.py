@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask.cli import with_appcontext
 import click
 import os
+
 from .utils import url_for
 
 db = SQLAlchemy()
@@ -36,13 +37,13 @@ def create_app(test_config=None):
     assets.register('less_all', less_bundle)
     assets.register('js_all', js_bundle)
 
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
 
     @click.command('init-db')
     @with_appcontext
     def init_db_command():
         # clear existing data + create new tables
+        db.drop_all()
         db.create_all()
         db.session.commit()
         click.echo('Initialized the database.')
@@ -52,7 +53,10 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
-    from .dashboards import main
-    app = main.Add_Routes_App(app)
+    from . import main
+    app.register_blueprint(main.bp)
+
+    from .dashboards import geo
+    app = geo.init_app(app)
 
     return app

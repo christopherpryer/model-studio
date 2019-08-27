@@ -9,7 +9,6 @@ def timestamp():
     """Return the current timestamp as an integer."""
     return int(time.time())
 
-
 def url_for(*args, **kwargs):
     """
     url_for replacement that works even when there is no request context.

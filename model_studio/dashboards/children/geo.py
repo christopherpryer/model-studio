@@ -6,11 +6,22 @@ import dash_table
 import pandas as pd
 import os
 
+from ... import db
 from ...utils import APP_STATIC, url_for
 
 def get_data():
-    filepath = os.path.join(APP_STATIC, 'data.csv')
-    return pd.read_csv(filepath)
+    dtypes = {
+        'route_id': int,
+        'stop_id': str,
+        'origin_lat': float,
+        'origin_lon': float,
+        'dest_lat': float,
+        'dest_lon': float,
+        'demand': float
+    }
+    df = pd.read_sql('select * from shipments', con=db.engine)
+    df = df.astype(dtypes)
+    return df
 
 def get_basic_table(df):
     return dash_table.DataTable(

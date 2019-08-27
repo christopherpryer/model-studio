@@ -7,3 +7,4 @@ flask_sqlalchemy
 plotly
 pyodbc
 pandas
+pytest

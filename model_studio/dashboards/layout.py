@@ -8,9 +8,8 @@ html_layout = '''<!DOCTYPE html>
                         </head>
                         <body>
                             <nav>
-                                <h2>Model Studio</h2>
+                                <a href="/">Model Studio</a>
                             </nav>
-                            <br>
 
                             <section>
                                 {%app_entry%}

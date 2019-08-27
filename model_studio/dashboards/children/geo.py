@@ -2,9 +2,11 @@ import dash_html_components as html
 import dash_core_components as dcc
 import plotly.graph_objects as go
 import dash_table
-from ...utils import APP_STATIC
+
 import pandas as pd
 import os
+
+from ...utils import APP_STATIC, url_for
 
 def get_data():
     filepath = os.path.join(APP_STATIC, 'data.csv')
@@ -53,6 +55,6 @@ def get_basic_chart(df):
 
 def get_children():
     df = get_data()
-    children = []
+    children = [html.A('Log Out', href=url_for('auth.logout'))]
     children += [get_basic_chart(df), get_basic_table(df)]
     return children

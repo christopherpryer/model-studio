@@ -1,8 +1,7 @@
 # TODO: token authentication & session management
 from flask import abort, g
 from werkzeug.security import generate_password_hash, check_password_hash
-import requests
-import binascii
+#import binascii
 import os
 
 from . import db
@@ -30,10 +29,10 @@ class User(db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def generate_token(self):
-        """Creates a 64 character long randomly generated token."""
-        self.token = binascii.hexlify(os.urandom(32)).decode('utf-8')
-        return self.token
+    #def generate_token(self):
+    #    """Creates a 64 character long randomly generated token."""
+    #    self.token = binascii.hexlify(os.urandom(32)).decode('utf-8')
+    #    return self.token
 
     @staticmethod
     def create(data):

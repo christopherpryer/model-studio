@@ -1,8 +1,6 @@
 from flask import session
 from dash.dependencies import Input, Output, State
 import dash_html_components as html
-import pandas as pd
-import numpy as np
 
 from ..children import geo as children
 

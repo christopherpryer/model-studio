@@ -2,13 +2,16 @@ from flask import Flask, render_template
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from flask.cli import with_appcontext
+from flask_login import LoginManager
 import click
 import os
 
-from .utils import url_for
+from .utils import url_for, timestamp
 
 db = SQLAlchemy()
 from . import models
+
+login_manager = LoginManager()
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -46,6 +49,14 @@ def create_app(test_config=None):
         db.drop_all()
         db.create_all()
         db.session.commit()
+
+        # set up owner (to reset on go-live)
+        user = models.User(
+            email='chris.pryer@nfiindustries.com',
+            password='testing',
+            role='Admin')
+        db.session.add(user)
+        db.session.commit()
         click.echo('Initialized the database.')
 
     app.cli.add_command(init_db_command)
@@ -58,5 +69,11 @@ def create_app(test_config=None):
 
     from .dashboards import geo
     app = geo.init_app(app)
+
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return models.User.query.filter_by(id=user_id).first()
 
     return app

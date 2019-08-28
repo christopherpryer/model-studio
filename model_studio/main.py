@@ -2,13 +2,13 @@
 import os
 from flask import Blueprint, render_template, request, redirect, make_response
 from flask_assets import Environment, Bundle
-from .auth import login_required
 from werkzeug.utils import secure_filename
 import pandas as pd
 import csv, io
 
 from . import db
 
+from .auth import login_required
 from .utils import url_for
 
 bp = Blueprint('main', __name__,
@@ -24,10 +24,9 @@ def allowed_file(filename):
 @bp.route('/')
 @login_required
 def home():
-    return render_template('home.html', template='home-template')
+    return render_template('home.html')
 
 @bp.route('/upload', methods=('GET', 'POST'))
-@login_required
 def upload():
     if request.method == 'POST':
         # check if the post request has the file part
@@ -46,11 +45,10 @@ def upload():
             df.to_sql('shipments', if_exists='replace', con=db.engine,
                 index=False)
             return redirect('/geo')
-    return render_template('upload.html', template='upload-template')
+    return render_template('upload.html')
 
 
 @bp.route('/download')
-@login_required
 def download():
     si = io.StringIO()
     cw = csv.writer(si)
@@ -62,5 +60,5 @@ def download():
     response = make_response(si.getvalue())
     response.headers['Content-Disposition'] = \
         'attachment; filename=shipments.csv'
-    response.headers["Content-type"] = "text/csv"
+    response.headers['Content-type'] = 'text/csv'
     return response

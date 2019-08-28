@@ -1,10 +1,11 @@
 """Routes for core Flask app."""
 import os
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, make_response
 from flask_assets import Environment, Bundle
 from .auth import login_required
 from werkzeug.utils import secure_filename
 import pandas as pd
+import csv, io
 
 from . import db
 
@@ -42,6 +43,24 @@ def upload():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             df = pd.read_csv(file)
-            df.to_sql('shipments', if_exists='replace', con=db.engine)
+            df.to_sql('shipments', if_exists='replace', con=db.engine,
+                index=False)
             return redirect('/geo')
     return render_template('upload.html', template='upload-template')
+
+
+@bp.route('/download')
+@login_required
+def download():
+    si = io.StringIO()
+    cw = csv.writer(si)
+    c = db.engine.execute('select * from shipments')
+    columns = c.keys()
+    rows = c.fetchall()
+    cw.writerow(columns)
+    cw.writerows(rows)
+    response = make_response(si.getvalue())
+    response.headers['Content-Disposition'] = \
+        'attachment; filename=shipments.csv'
+    response.headers["Content-type"] = "text/csv"
+    return response

@@ -24,11 +24,12 @@ def get_data():
     return df
 
 def get_basic_table(df):
-    return dash_table.DataTable(
-        id='data',
-        columns=[{'name': i, 'id': i} for i in df.columns],
-        data=df.to_dict('rows')
-    )
+    return html.Div([
+        dash_table.DataTable(
+            id='data',
+            columns=[{'name': i, 'id': i} for i in df.columns],
+            data=df.to_dict('rows')),
+        html.A('Download', href=url_for('main.download'))])
 
 def get_basic_chart(df):
     fig = go.Figure()

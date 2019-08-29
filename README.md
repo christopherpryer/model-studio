@@ -4,7 +4,7 @@ Flask web app with user authentication and database connection for Plotly dash a
 ### Instructions
 - ```python -m pip install -r requirements.txt```
 - On windows:
-  - ```set FLASK_APP=cartesian_routes```
+  - ```set FLASK_APP=model_studio```
   - ```set FLASK_ENV=development```
   - ```set SQL_SERVER=server-name-here```
 - On other:

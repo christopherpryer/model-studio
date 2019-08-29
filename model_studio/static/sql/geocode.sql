@@ -5,8 +5,10 @@ select s.id, s.route_id, s.stop_id, s.order_id, s.load_id, s.sku_id,
     g2.latitude as dest_lat, g2.longitude as dest_lon,
     s.demand, s.demand_uom
     from shipments as s
-        left join geocodes as g1 on (s.origin_city = g1.city
-            and s.origin_state = g1.state and s.origin_zip = g1.zip)
-        left join geocodes as g2 on (s.dest_city = g2.city
-            and s.dest_state = g2.state and s.dest_zip = g2.zip)
+        left join geocodes as g1 on (upper(s.origin_city) = upper(g1.city)
+            and upper(s.origin_state) = upper(g1.state)
+            and upper(s.origin_zip) = upper(g1.zip))
+        left join geocodes as g2 on (upper(s.dest_city) = upper(g2.city)
+            and upper(s.dest_state) = upper(g2.state)
+            and upper(s.dest_zip) = upper(g2.zip))
 	order by s.id, s.route_id, s.stop_id;

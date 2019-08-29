@@ -11,7 +11,7 @@ from ...utils import url_for
 def get_basic_table(df):
     return dash_table.DataTable(
             id='data',
-            data=df.to_dict('records'),
+            data=df.head().to_dict('records'),
             columns=[{'id': c, 'name': c} for c in df.columns],
             style_table={'overflowX': 'scroll'},
         )
@@ -29,11 +29,9 @@ def get_basic_chart(df):
                 name='destinations',
                 mode='markers',
                 marker=dict(
-                    size=df.demand,
                     line_width=1.5,
                     line_color='black',
                     sizemode='area',
-                    sizeref=sizeref
                 )))
     fig.update_layout(
     title_text='',

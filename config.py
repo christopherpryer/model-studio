@@ -19,6 +19,7 @@ class Config:
     SECRET_KEY = 'dev' #os.environ.get('SECRET_KEY')
     FLASK_APP = os.environ.get('FLASK_APP')
     FLASK_ENV = os.environ.get('FLASK_ENV')
+    MAX_CONTENT_LENGTH = 100 * 1024 * 1024  # 100MB limit
 
     # Assets
     LESS_BIN = os.environ.get('LESS_BIN')

@@ -20,7 +20,6 @@ EXTERNAL_STYLESHEETS = ['/static/dist/css/load.css',
 EXTERNAL_SCRIPTS = ['/static/dist/js/includes/jquery.min.js',
                         '/static/dist/js/main.js']
 
-
 def init_app(server):
     """Create a Dash app."""
     dash_app = Dash(server=server,

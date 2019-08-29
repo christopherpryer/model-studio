@@ -9,3 +9,4 @@ pyodbc
 pandas
 pytest
 flask_login
+haversine

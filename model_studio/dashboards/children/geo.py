@@ -9,26 +9,24 @@ import os
 from ... import db
 from ...utils import APP_STATIC, url_for
 
-def get_data():
-    dtypes = {
-        'route_id': int,
-        'stop_id': str,
-        'origin_lat': float,
-        'origin_lon': float,
-        'dest_lat': float,
-        'dest_lon': float,
-        'demand': float
-    }
-    df = pd.read_sql('select * from shipments', con=db.engine)
-    df = df.astype(dtypes)
-    return df
+def geocode():
+    """query shipments table geocoded and return as df"""
+    script = ''
+    dirpath = os.path.join(APP_STATIC, 'sql')
+    with open(os.path.join(dirpath, 'geocode.sql')) as f:
+        script = f.read()
+    return pd.read_sql(script, con=db.engine)
+
+#### plotting
 
 def get_basic_table(df):
     return html.Div([
         dash_table.DataTable(
             id='data',
-            columns=[{'name': i, 'id': i} for i in df.columns],
-            data=df.to_dict('rows')),
+            data=df.to_dict('records'),
+            columns=[{'id': c, 'name': c} for c in df.columns],
+            style_table={'overflowX': 'scroll'},
+        ),
         html.A('Download', href=url_for('main.download'))])
 
 def get_basic_chart(df):
@@ -66,7 +64,7 @@ def get_basic_chart(df):
 
 
 def get_children():
-    df = get_data()
+    df = geocode()
     children = [html.A('Log Out', href=url_for('auth.logout'))]
     children += [get_basic_chart(df), get_basic_table(df)]
     return children

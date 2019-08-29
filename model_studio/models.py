@@ -53,3 +53,24 @@ class User(db.Model, UserMixin):
 
     def has_role(self, role):
         return role == self.role
+
+class Shipment(db.Model):
+    __tablename__ = 'shipments'
+    id = db.Column(db.String(255), primary_key=True)
+    route_id = db.Column(db.String(255))
+    stop_id = db.Column(db.String(255))
+    order_id = db.Column(db.String(255))
+    load_id = db.Column(db.String(255))
+    sku_id = db.Column(db.String(255))
+    origin_id = db.Column(db.String(255))
+    origin_city = db.Column(db.String(50))
+    origin_state = db.Column(db.String(50))
+    origin_zip = db.Column(db.String(10))
+    origin_country = db.Column(db.String(50))
+    dest_id = db.Column(db.String(255))
+    dest_city = db.Column(db.String(50))
+    dest_state = db.Column(db.String(50))
+    dest_zip = db.Column(db.String(10))
+    dest_country = db.Column(db.String(50))
+    demand = db.Column(db.Float)
+    demand_uom = db.Column(db.String(50))

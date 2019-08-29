@@ -42,6 +42,11 @@ def upload():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             df = pd.read_csv(file)
+
+            # quick fix: correct zipcodes
+            df.origin_zip = df.origin_zip.astype(str).str.zfill(5)
+            df.dest_zip = df.dest_zip.astype(str).str.zfill(5)
+
             df.to_sql('shipments', if_exists='replace', con=db.engine,
                 index=False)
             return redirect('/geo')

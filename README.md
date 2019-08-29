@@ -15,25 +15,24 @@ Flask web app with user authentication and database connection for Plotly dash a
 - [click here](http://127.0.0.1:5000/routes/)
 
 #### Other
-- ```python -m flask init-db``` to initialize the database using models.py
+- ```python -m flask init-db``` to initialize the database using models.py. **Note**: geocodes table is a copy of geo and does not have a SQLAlchemy model.
 
 
-#### Functionality
+#### v0.1 Functionality
 - Standardized cleaned shipment data SQL upload.
   - Requirements: [see shipments.csv](https://github.com/christopherpryer/model-studio/blob/master/model_studio/static/shipments.csv)
-
 - Standardized processed shipment data:
   - geocoded origins and destinations.
   - distances between origins and destinations ([haversine](https://en.wikipedia.org/wiki/Haversine_formula)).
-  - hover-text for plotting.
-
- - Standardized process for publishing plots of shipment data.
-
  - Standardized processed shipment data SQL/Dash download.
 
- - Standardized geocode data storage.
-
  #### Wishlist
+- Standardized lane visualization.
+- Standardized geocode data storage.
+- Standardized process for publishing plots of shipment data.
+- Standardized location visual scaling.
+- Standardized location hover-text.
 - Location data SQL abstraction.
+- Shipment data SQL abstraction.
 - PC Miler distance calculation.
 - Data error handling (shipment_id assumptions, etc.).

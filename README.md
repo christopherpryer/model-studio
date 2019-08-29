@@ -12,7 +12,7 @@ Flask web app with user authentication and database connection for Plotly dash a
   - ```export FLASK_ENV=development```
   - ```export SQL_SERVER=server-name-here```
 - ```python -m flask run```
-- [click here](http://127.0.0.1:5000/routes/)
+- [click here](http://127.0.0.1:5000/)
 
 #### Other
 - ```python -m flask init-db``` to initialize the database using models.py. **Note**: geocodes table is a copy of geo and does not have a SQLAlchemy model.
